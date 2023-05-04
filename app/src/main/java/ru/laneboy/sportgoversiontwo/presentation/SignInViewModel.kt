@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.laneboy.sportgoversiontwo.data.network.ApiFactory.apiService
-import ru.laneboy.sportgoversiontwo.data.network.responses.SignInDataResponse
+import ru.laneboy.sportgoversiontwo.data.network.requests.SignInDataRequest
 
 class SignInViewModel : ViewModel() {
 
@@ -26,12 +26,18 @@ class SignInViewModel : ViewModel() {
         val password = inputPassword?.trim() ?: ""
         if (email.isEmailValid() && password.isNotEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
-                val signInItem = SignInDataResponse(email, password)
+                val signInItem = SignInDataRequest(email, password)
                 try {
-                    apiService.singIn(signInItem)
-                    _openNextScreen.postValue(Unit)
+                    val result = apiService.singIn(signInItem)
+                    if (result.isSuccessful) {
+                        result.body()?.let {
+                            _openNextScreen.postValue(Unit)
+                        }
+                    }
                 } catch (e: Exception) {
-
+                    withContext(Dispatchers.Main) {
+//                        Toast.makeText(, "Неверный логин или пароль", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

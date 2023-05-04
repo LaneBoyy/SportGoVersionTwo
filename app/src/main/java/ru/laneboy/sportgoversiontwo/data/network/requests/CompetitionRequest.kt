@@ -1,9 +1,9 @@
-package ru.laneboy.sportgoversiontwo.data.network.responses
+package ru.laneboy.sportgoversiontwo.data.network.requests
 
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class CompetitionResponse(
+data class CompetitionRequest(
     @SerializedName("competitionId")
     val competitionId: Int?,
     @SerializedName("competitionName")
