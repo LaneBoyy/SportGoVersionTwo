@@ -5,15 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_background"
-    tools:context=".presentation.fragments.SignInFragment">
-
+    tools:context=".presentation.fragments.SignUpFragment">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/stem_medium"
-        android:text="@string/text_sign_in"
+        android:text="Регистрация"
         android:textColor="@color/gradient_pink"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -30,7 +29,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/stem_medium"
-        android:text="Введите авторизационные данные, чтобы войти в аккаунт"
+        android:text="Введите данные, которые будут использоваться при авторизации"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +61,7 @@
         android:inputType="textEmailAddress"
         android:lines="1"
         android:paddingHorizontal="10dp"
-        android:text="aaa@mail.ru"
+        android:text="userTest@mail.ru"
         android:textColor="@color/white"
         android:textCursorDrawable="@null"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,12 +93,58 @@
         android:inputType="textPassword"
         android:lines="1"
         android:paddingHorizontal="10dp"
-        android:text="aaa"
+        android:text="222222kk"
         android:textColor="@color/white"
         android:textCursorDrawable="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <RadioGroup
+        android:id="@+id/toggle"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="50dp"
+        android:background="@drawable/pink_out_line"
+        android:checkedButton="@+id/participantRole"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sign_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password">
+
+        <RadioButton
+            android:id="@+id/participantRole"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_background"
+            android:button="@null"
+            android:fontFamily="@font/stem_medium"
+            android:gravity="center"
+            android:text="Участник"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/sponsorRole"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_background"
+            android:button="@null"
+            android:fontFamily="@font/stem_medium"
+            android:gravity="center"
+            android:text="Организатор"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RadioGroup>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_sign_in"
@@ -108,27 +153,11 @@
         android:layout_marginHorizontal="25dp"
         android:background="@drawable/button_round_gradient_background"
         android:fontFamily="@font/stem_medium"
-        android:text="Продолжить"
+        android:text="Создать аккаунт"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
-
-    <TextView
-        android:id="@+id/start_sign_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/stem_medium"
-        android:gravity="center_horizontal"
-        android:text="Зарегистрироваться"
-        android:textColor="@color/gradient_pink"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
