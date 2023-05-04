@@ -3,10 +3,10 @@ package ru.laneboy.sportgoversiontwo.data.network
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import ru.laneboy.sportgoversiontwo.data.responses.AddCompetitionDataResponse
-import ru.laneboy.sportgoversiontwo.data.responses.CompetitionsResponse
-import ru.laneboy.sportgoversiontwo.data.responses.SignInDataResponse
-import ru.laneboy.sportgoversiontwo.data.responses.SignUpDataResponse
+import ru.laneboy.sportgoversiontwo.data.network.responses.AddCompetitionDataResponse
+import ru.laneboy.sportgoversiontwo.data.network.responses.CompetitionResponse
+import ru.laneboy.sportgoversiontwo.data.network.responses.SignInDataResponse
+import ru.laneboy.sportgoversiontwo.data.network.responses.SignUpDataResponse
 
 interface ApiService {
 
@@ -22,5 +22,5 @@ interface ApiService {
     suspend fun addCompetition(@Body addCompetitionData: AddCompetitionDataResponse)
 
     @GET("api/competitions")
-    suspend fun getCompetitionsList(): List<CompetitionsResponse>
+    suspend fun getCompetitionsList(): List<CompetitionResponse>
 }
