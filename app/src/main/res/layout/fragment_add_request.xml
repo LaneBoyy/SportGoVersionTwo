@@ -111,7 +111,6 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_background_transparent"
             android:fontFamily="@font/stem_semilight"
-            android:inputType="number"
             android:lines="1"
             android:paddingHorizontal="10dp"
             android:text="Баскетбол"

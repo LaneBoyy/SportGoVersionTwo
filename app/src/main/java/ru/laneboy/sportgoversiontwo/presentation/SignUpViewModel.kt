@@ -7,33 +7,39 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ru.laneboy.sportgoversiontwo.data.network.ApiFactory.apiService
-import ru.laneboy.sportgoversiontwo.data.network.requests.SignInDataRequest
+import ru.laneboy.sportgoversiontwo.data.network.requests.SignUpDataRequest
 
-class SignInViewModel : ViewModel() {
+class SignUpViewModel: ViewModel() {
 
-    private val _openNextScreen = MutableLiveData<Unit>()
-    val openNextScreen: LiveData<Unit>
-        get() = _openNextScreen
+    private val _openFirstScreen = MutableLiveData<Unit>()
+    val openFirstScreen: LiveData<Unit>
+        get() = _openFirstScreen
 
-    fun signIn(inputEmail: String?, inputPassword: String?) {
+    private val _openSecondScreen = MutableLiveData<Unit>()
+    val openSecondScreen: LiveData<Unit>
+        get() = _openSecondScreen
+
+    fun signUp(inputEmail: String?, inputPassword: String?, inputRole: Int) {
         val email = inputEmail?.trim() ?: ""
         val password = inputPassword?.trim() ?: ""
         if (email.isEmailValid() && password.isPasswordValid()) {
             viewModelScope.launch(Dispatchers.IO) {
-                val signInItem = SignInDataRequest(email, password)
+                val signUpItem = SignUpDataRequest(email, null, password, inputRole)
                 try {
-                    val result = apiService.singIn(signInItem)
+                    val result = apiService.signUp(signUpItem)
                     if (result.isSuccessful) {
-                        result.body()?.let {
-                            _openNextScreen.postValue(Unit)
+                        when (inputRole) {
+                            0 -> result.body()?.let {
+                                _openFirstScreen.postValue(Unit)
+                            }
+                            1 -> result.body()?.let {
+                                _openSecondScreen.postValue(Unit)
+                            }
                         }
                     }
                 } catch (e: Exception) {
-                    withContext(Dispatchers.Main) {
-//                        Toast.makeText(, "Неверный логин или пароль", Toast.LENGTH_SHORT).show()
-                    }
+                    TODO()
                 }
             }
         }

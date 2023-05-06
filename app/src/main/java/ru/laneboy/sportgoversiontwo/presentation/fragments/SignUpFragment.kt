@@ -5,14 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.FragmentSignUpBinding
+import ru.laneboy.sportgoversiontwo.presentation.SignUpViewModel
 
 class SignUpFragment : Fragment() {
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding: FragmentSignUpBinding
         get() = _binding ?: throw RuntimeException("FragmentSignUpBinding == null")
+
+    private lateinit var viewModel: SignUpViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +28,7 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
         setClickOnButtonSignIn()
     }
 
@@ -44,6 +49,16 @@ class SignUpFragment : Fragment() {
             .replace(R.id.fragment_container_main, AddRequestFragment.newInstance())
             .commit()
     }
+
+    private fun observeViewModel() {
+        viewModel.openFirstScreen.observe(viewLifecycleOwner) {
+//          открыть экран
+        }
+        viewModel.openSecondScreen.observe(viewLifecycleOwner) {
+//            открыть экран
+        }
+    }
+
 
     override fun onDestroyView() {
         _binding = null
