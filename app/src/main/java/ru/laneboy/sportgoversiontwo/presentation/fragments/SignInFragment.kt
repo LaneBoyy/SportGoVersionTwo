@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.FragmentSignInBinding
 import ru.laneboy.sportgoversiontwo.presentation.SignInViewModel
+import ru.laneboy.sportgoversiontwo.presentation.sign_up.SignUpFragment
 
 class SignInFragment : Fragment() {
 
@@ -48,8 +49,11 @@ class SignInFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.openNextScreen.observe(viewLifecycleOwner) {
+        viewModel.openParticipantScreen.observe(viewLifecycleOwner) {
             launchAddRequestFragment()
+        }
+        viewModel.openOrganizerScreen.observe(viewLifecycleOwner) {
+
         }
     }
 

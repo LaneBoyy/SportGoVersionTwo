@@ -1,16 +1,20 @@
-package ru.laneboy.sportgoversiontwo.presentation.fragments
+package ru.laneboy.sportgoversiontwo.presentation.sign_up
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.FragmentSignUpBinding
-import ru.laneboy.sportgoversiontwo.presentation.SignUpViewModel
+import ru.laneboy.sportgoversiontwo.presentation.fragments.AddRequestFragment
+import ru.laneboy.sportgoversiontwo.util.initProgressBar
 
 class SignUpFragment : Fragment() {
+
+    private val dialog by lazy { initProgressBar(layoutInflater, requireContext()) }
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding: FragmentSignUpBinding
@@ -30,11 +34,20 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
         setClickOnButtonSignIn()
+        observeViewModel()
     }
 
     private fun setClickOnButtonSignIn() {
-        binding.btnSignIn.setOnClickListener {
-            launchNextScreen()
+        binding.btnSignUp.setOnClickListener {
+            val roleId = if (binding.toggle.checkedRadioButtonId == R.id.participantRole0)
+                0
+            else
+                1
+            viewModel.signUp(
+                binding.etEmail.text.toString(),
+                binding.etPassword.text.toString(),
+                roleId
+            )
         }
     }
 
@@ -51,11 +64,22 @@ class SignUpFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.openFirstScreen.observe(viewLifecycleOwner) {
-//          открыть экран
-        }
-        viewModel.openSecondScreen.observe(viewLifecycleOwner) {
-//            открыть экран
+        viewModel.openOrganizerScreen.observe(viewLifecycleOwner) {
+            when (it) {
+                UserRole.LOADING -> {
+                    dialog.show()
+                }
+                UserRole.ORGANIZER -> {
+                    dialog.dismiss()
+                }
+                UserRole.PARTICIPANT -> {
+                    dialog.dismiss()
+                }
+                UserRole.ERROR -> {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Error: ${it.error}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

@@ -2,7 +2,7 @@
     <string name="app_name">SportGoVersionTwo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="text_sport_matches">Спортивные матчи</string>
+    <string name="text_sport_matches">Доступные спортивные матчи</string>
     <string name="text_matches">Матчи</string>
     <string name="text_create_new_match">Создание нового матча</string>
     <string name="text_create">Создать</string>

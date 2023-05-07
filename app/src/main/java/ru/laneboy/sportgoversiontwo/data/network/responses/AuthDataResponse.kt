@@ -2,7 +2,7 @@ package ru.laneboy.sportgoversiontwo.data.network.responses
 
 import com.google.gson.annotations.SerializedName
 
-data class SignInDataResponse(
+data class AuthDataResponse(
     @SerializedName("userId")
     val userId: Int?,
     @SerializedName("userName")

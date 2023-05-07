@@ -8,17 +8,16 @@ import ru.laneboy.sportgoversiontwo.data.network.requests.AddCompetitionDataRequ
 import ru.laneboy.sportgoversiontwo.data.network.requests.CompetitionRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.SignInDataRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.SignUpDataRequest
-import ru.laneboy.sportgoversiontwo.data.network.responses.SignInDataResponse
-import ru.laneboy.sportgoversiontwo.data.network.responses.SignUpDataResponse
+import ru.laneboy.sportgoversiontwo.data.network.responses.AuthDataResponse
 
 interface ApiService {
 
     //Authentication
     @POST("signin")
-    suspend fun singIn(@Body singInData: SignInDataRequest): Response<SignInDataResponse>
+    suspend fun singIn(@Body singInData: SignInDataRequest): Response<AuthDataResponse>
 
     @POST("signup")
-    suspend fun signUp(@Body signUpData: SignUpDataRequest): Response<SignUpDataResponse>
+    suspend fun signUp(@Body signUpData: SignUpDataRequest): Response<AuthDataResponse>
 
     //Competition
     @POST("api/competition")
