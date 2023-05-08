@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.FragmentSplashScreenBinding
+import ru.laneboy.sportgoversiontwo.presentation.sign_in.SignInFragment
 
 class SplashScreenFragment : Fragment() {
 

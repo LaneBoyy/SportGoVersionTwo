@@ -7,4 +7,6 @@
     <string name="text_create_new_match">Создание нового матча</string>
     <string name="text_create">Создать</string>
     <string name="text_sign_in">Авторизация</string>
+    <string name="text_published_matches">Опубликованные спортивные\nматчи</string>
+    <string name="text_open_requests">Посмотреть поданные заявки</string>
 </resources>

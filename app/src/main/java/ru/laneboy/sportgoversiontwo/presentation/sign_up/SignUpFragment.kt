@@ -10,11 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.FragmentSignUpBinding
 import ru.laneboy.sportgoversiontwo.presentation.fragments.AddRequestFragment
+import ru.laneboy.sportgoversiontwo.presentation.organizer.MatchesListForOrganizerFragment
+import ru.laneboy.sportgoversiontwo.presentation.participant.MatchesListForParticipantFragment
 import ru.laneboy.sportgoversiontwo.util.initProgressBar
 
 class SignUpFragment : Fragment() {
 
-    private val dialog by lazy { initProgressBar(layoutInflater, requireContext()) }
+    private val dialog by lazy {
+        initProgressBar(layoutInflater, requireContext())
+    }
 
     private var _binding: FragmentSignUpBinding? = null
     private val binding: FragmentSignUpBinding
@@ -33,8 +37,30 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
-        setClickOnButtonSignIn()
         observeViewModel()
+        setClickOnButtonSignIn()
+    }
+
+    private fun observeViewModel() {
+        viewModel.openOrganizerScreen.observe(viewLifecycleOwner) {
+            when (it!!) {
+                UserRole.LOADING -> {
+                    dialog.show()
+                }
+                UserRole.ORGANIZER -> {
+                    dialog.dismiss()
+                    launchNextScreen(MatchesListForOrganizerFragment.newInstance())
+                }
+                UserRole.PARTICIPANT -> {
+                    dialog.dismiss()
+                    launchNextScreen(MatchesListForParticipantFragment.newInstance())
+                }
+                UserRole.ERROR -> {
+                    dialog.dismiss()
+                    Toast.makeText(context, "Error: ${it.error}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setClickOnButtonSignIn() {
@@ -51,7 +77,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun launchNextScreen() {
+    private fun launchNextScreen(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .setCustomAnimations(
                 R.anim.slide_enter_left,
@@ -59,30 +85,9 @@ class SignUpFragment : Fragment() {
                 R.anim.slide_enter_right,
                 R.anim.slide_exit_right
             )
-            .replace(R.id.fragment_container_main, AddRequestFragment.newInstance())
+            .replace(R.id.fragment_container_main, fragment)
             .commit()
     }
-
-    private fun observeViewModel() {
-        viewModel.openOrganizerScreen.observe(viewLifecycleOwner) {
-            when (it) {
-                UserRole.LOADING -> {
-                    dialog.show()
-                }
-                UserRole.ORGANIZER -> {
-                    dialog.dismiss()
-                }
-                UserRole.PARTICIPANT -> {
-                    dialog.dismiss()
-                }
-                UserRole.ERROR -> {
-                    dialog.dismiss()
-                    Toast.makeText(context, "Error: ${it.error}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
 
     override fun onDestroyView() {
         _binding = null

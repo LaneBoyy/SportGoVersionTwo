@@ -1,7 +1,6 @@
 package ru.laneboy.sportgoversiontwo.presentation.sign_up
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -33,18 +32,18 @@ class SignUpViewModel : ViewModel() {
                         }
                     } else {
                         _openOrganizerScreen.postValue(UserRole.ERROR.apply {
-                            error = result.errorBody().toString()
+                            error = ERROR_STRING
                         })
                     }
                 } catch (e: Exception) {
                     _openOrganizerScreen.postValue(UserRole.ERROR.apply {
-                        error = e.message
+                        error = ERROR_NOT_INTERNET_STRING
                     })
                 }
             }
         } else {
             _openOrganizerScreen.postValue(UserRole.ERROR.apply {
-                error = "ErRoR"
+                error = ERROR_INCORRECT_STRING
             })
         }
     }
@@ -62,5 +61,9 @@ class SignUpViewModel : ViewModel() {
 
         private const val PARTICIPANT_ROLE_CODE = "Participant"
         private const val ORGANIZER_ROLE_CODE = "Organizer"
+        private const val ERROR_STRING = "Неверная почта или пароль"
+        private const val ERROR_INCORRECT_STRING = "Некорректно введена почта или пароль"
+        private const val ERROR_NOT_INTERNET_STRING =
+            "Отсутствует подключение к интернету. Проверьте соединение и попробуйте снова"
     }
 }

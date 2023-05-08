@@ -1,101 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="12dp"
     android:layout_marginVertical="8dp"
     android:background="@drawable/card_background"
     android:elevation="4dp">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
-
     <TextView
-        android:id="@+id/team_one_label"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@color/red"
-        android:fontFamily="@font/stem_medium"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/team_two_label"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@color/blue"
-        android:fontFamily="@font/stem_medium"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VS"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/team_one_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/team_one_label"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/team_two_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintEnd_toStartOf="@+id/team_two_label"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/button_add_score"
+        android:id="@+id/tv_competition_name"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:text="Добавить счет"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/stem_medium"
+        android:textColor="@color/gradient_pink"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Basket Cup" />
+
+    <TextView
+        android:id="@+id/tv_competition_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="14sp"
+        android:fontFamily="@font/stem_semilight"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_competition_name"
+        tools:text="Испытайте себя в лиге чемпионов" />
+
+    <TextView
+        android:id="@+id/tv_sport_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:fontFamily="@font/stem_semilight"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_competition_description"
+        tools:text="Направление: баскетбол" />
+
+    <TextView
+        android:id="@+id/tv_competition_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:fontFamily="@font/stem_semilight"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sport_type"
+        tools:text="Дата проведения: 16 сентября" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_card_button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/gradient_orange"
+        android:fontFamily="@font/stem_medium"
+        android:text="Просмотреть заявки"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_competition_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
