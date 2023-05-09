@@ -1,4 +1,4 @@
-package ru.laneboy.sportgoversiontwo.presentation.organizer
+package ru.laneboy.sportgoversiontwo.presentation.organizer_detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -9,4 +9,6 @@
     <string name="text_sign_in">Авторизация</string>
     <string name="text_published_matches">Опубликованные спортивные\nматчи</string>
     <string name="text_open_requests">Посмотреть поданные заявки</string>
+    <string name="competition_list">На данный матчи отсустствуют</string>
+    <string name="competition_date">Дата проведения: %s</string>
 </resources>
