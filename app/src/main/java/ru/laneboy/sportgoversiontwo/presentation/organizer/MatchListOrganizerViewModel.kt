@@ -21,9 +21,6 @@ class MatchListOrganizerViewModel : ViewModel() {
     val organizerList: LiveData<Response<List<CompetitionItemResponse>>>
         get() = _organizerList
 
-    init {
-        loadCompetitionList()
-    }
 
     fun loadCompetitionList() {
         viewModelScope.launch(Dispatchers.IO) {

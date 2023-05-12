@@ -13,6 +13,8 @@ class AddRequestFragment : Fragment() {
     private val binding: FragmentAddRequestBinding
         get() = _binding ?: throw RuntimeException("FragmentAddRequestBinding == null")
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

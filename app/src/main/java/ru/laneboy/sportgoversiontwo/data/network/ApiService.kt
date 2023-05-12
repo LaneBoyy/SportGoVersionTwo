@@ -21,7 +21,7 @@ interface ApiService {
 
     //Competition
     @POST("api/competition")
-    suspend fun addCompetition(@Body addCompetitionData: AddCompetitionDataRequest)
+    suspend fun addCompetition(@Body addCompetitionData: AddCompetitionDataRequest):Response<Any>
 
     @GET("api/competitions")
     suspend fun getCompetitionsList(): Response<List<CompetitionItemResponse>>

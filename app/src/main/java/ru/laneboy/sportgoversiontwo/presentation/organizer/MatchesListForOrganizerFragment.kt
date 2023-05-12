@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.json.JSONObject
+import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.FragmentMatchesListForOrganizerBinding
+import ru.laneboy.sportgoversiontwo.presentation.add_competition.AddCompetitionFragment
 import ru.laneboy.sportgoversiontwo.util.gone
 import ru.laneboy.sportgoversiontwo.util.showToast
 import ru.laneboy.sportgoversiontwo.util.visible
@@ -46,7 +49,7 @@ class MatchesListForOrganizerFragment : Fragment() {
                 if (list?.isNotEmpty() == true) {
                     binding.rvMatchList.visible()
                     binding.tvEmptyList.gone()
-                    adapter.setList(list)
+                    adapter.setList(list.reversed())
                 } else {
                     binding.rvMatchList.gone()
                     binding.tvEmptyList.visible()
@@ -58,10 +61,28 @@ class MatchesListForOrganizerFragment : Fragment() {
     }
 
     private fun setUI() {
+        binding.linearLayout.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .addToBackStack(null)
+                .setCustomAnimations(
+                    R.anim.slide_enter_left,
+                    R.anim.slide_exit_left,
+                    R.anim.slide_enter_right,
+                    R.anim.slide_exit_right
+                )
+                .replace(R.id.fragment_container_main, AddCompetitionFragment.newInstance())
+                .commit()
+
+        }
         binding.rvMatchList.adapter = adapter
         binding.root.setOnRefreshListener {
             viewModel.loadCompetitionList()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadCompetitionList()
     }
 
     override fun onDestroyView() {
