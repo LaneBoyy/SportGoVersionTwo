@@ -8,6 +8,7 @@ import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.ActivityMainBinding
 import ru.laneboy.sportgoversiontwo.presentation.fragments.SplashScreenFragment
 import ru.laneboy.sportgoversiontwo.presentation.organizer.MatchesListForOrganizerFragment
+import ru.laneboy.sportgoversiontwo.presentation.participant.MatchesListForParticipantFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         removeStatusBar()
 //        setFragment(SplashScreenFragment.newInstance())
-        setFragment(MatchesListForOrganizerFragment.newInstance())
+        setFragment(MatchesListForParticipantFragment.newInstance())
     }
 
     private fun setFragment(fragment: Fragment) {

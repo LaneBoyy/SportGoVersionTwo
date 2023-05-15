@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import org.json.JSONObject
 import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.FragmentMatchesListForOrganizerBinding
 import ru.laneboy.sportgoversiontwo.presentation.add_competition.AddCompetitionFragment
@@ -25,7 +23,7 @@ class MatchesListForOrganizerFragment : Fragment() {
         ViewModelProvider(this)[MatchListOrganizerViewModel::class.java]
     }
 
-    private val adapter = MatchListAdapter()
+    private val adapter = MatchListAdapterForOrganizer()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

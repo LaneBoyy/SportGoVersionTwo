@@ -7,18 +7,21 @@ import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.data.network.responses.CompetitionItemResponse
 import ru.laneboy.sportgoversiontwo.databinding.MatchItemForOrganizerBinding
 
-class MatchListAdapter : RecyclerView.Adapter<MatchItemForOrganizerViewHolder>() {
+class MatchListAdapterForOrganizer : RecyclerView.Adapter<MatchItemForOrganizerViewHolder>() {
 
     private var competitionList = listOf<CompetitionItemResponse>()
     private val onButtonClick: ((id: Int) -> Unit)? = null
     private val onItemClick: ((id: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+        parent: ViewGroup, viewType: Int
     ): MatchItemForOrganizerViewHolder {
         val binding =
-            MatchItemForOrganizerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MatchItemForOrganizerBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return MatchItemForOrganizerViewHolder(binding)
     }
 
@@ -29,8 +32,7 @@ class MatchListAdapter : RecyclerView.Adapter<MatchItemForOrganizerViewHolder>()
         binding.tvCompetitionDescription.text = item.competitionDescription
         binding.tvSportType.text = item.sportType
         binding.tvCompetitionDate.text = String.format(
-            binding.root.context.getString(R.string.competition_date),
-            item.competitionDate
+            binding.root.context.getString(R.string.competition_date), item.competitionDate
         )
         binding.root.setOnClickListener {
             onItemClick?.invoke(item.competitionId)
