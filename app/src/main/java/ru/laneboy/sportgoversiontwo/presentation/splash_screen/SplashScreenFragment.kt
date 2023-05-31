@@ -1,4 +1,4 @@
-package ru.laneboy.sportgoversiontwo.presentation.fragments
+package ru.laneboy.sportgoversiontwo.presentation.splash_screen
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

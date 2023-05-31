@@ -5,9 +5,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.SimpleAdapter.ViewBinder
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import ru.laneboy.sportgoversiontwo.databinding.ProgressBarFullScreenBinding
 
 fun initProgressBar(layoutInflater: LayoutInflater, context: Context): AlertDialog {
@@ -20,8 +23,9 @@ fun initProgressBar(layoutInflater: LayoutInflater, context: Context): AlertDial
 }
 
 
-fun Fragment.showToast(message: String) =
-    Toast.makeText(this.requireActivity(), message, Toast.LENGTH_SHORT).show()
+fun Fragment.showToast(message: String?) =
+    Toast.makeText(this.requireActivity(), message ?: "Unknown error", Toast.LENGTH_SHORT).show()
+
 
 fun View.gone() {
     visibility = View.GONE
@@ -30,3 +34,5 @@ fun View.gone() {
 fun View.visible() {
     visibility = View.VISIBLE
 }
+
+fun ViewBinding.getString(@StringRes id:Int) = this.root.context.getString(id)

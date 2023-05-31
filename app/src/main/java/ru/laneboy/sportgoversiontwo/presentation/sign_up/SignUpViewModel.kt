@@ -7,44 +7,34 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.laneboy.sportgoversiontwo.data.SportRepository
 import ru.laneboy.sportgoversiontwo.data.network.ApiFactory.apiService
 import ru.laneboy.sportgoversiontwo.data.network.requests.SignUpDataRequest
+import ru.laneboy.sportgoversiontwo.data.network.responses.AuthDataResponse
+import ru.laneboy.sportgoversiontwo.domain.AuthData
+import ru.laneboy.sportgoversiontwo.domain.Resource
 
 class SignUpViewModel : ViewModel() {
 
-    private val _openOrganizerScreen = MutableLiveData<UserRole>()
-    val openOrganizerScreen: LiveData<UserRole>
+    private val _openOrganizerScreen = MutableLiveData<Resource<AuthData>>()
+    val openOrganizerScreen: LiveData<Resource<AuthData>>
         get() = _openOrganizerScreen
 
-    fun signUp(inputEmail: String?, inputPassword: String?, inputRole: Int) {
+    fun signUp(
+        inputEmail: String?,
+        inputNickname: String?,
+        inputPassword: String?,
+        inputRole: Int
+    ) {
         val email = inputEmail?.trim() ?: ""
+        val nickname = inputNickname?.trim() ?: ""
         val password = inputPassword?.trim() ?: ""
-        if (email.isEmailValid() && password.isPasswordValid()) {
+        if (email.isEmailValid() && password.isPasswordValid() && nickname.isNotEmpty()) {
+            _openOrganizerScreen.value = Resource.loading()
             viewModelScope.launch(Dispatchers.IO) {
-                _openOrganizerScreen.postValue(UserRole.LOADING)
-                val signUpItem = SignUpDataRequest(email, "", password, inputRole)
-                try {
-                    val result = apiService.signUp(signUpItem)
-                    if (result.isSuccessful) {
-                        when (result.body()?.userRole) {
-                            PARTICIPANT_ROLE_CODE -> _openOrganizerScreen.postValue(UserRole.PARTICIPANT)
-                            ORGANIZER_ROLE_CODE -> _openOrganizerScreen.postValue(UserRole.ORGANIZER)
-                        }
-                    } else {
-                        _openOrganizerScreen.postValue(UserRole.ERROR.apply {
-                            error = ERROR_STRING
-                        })
-                    }
-                } catch (e: Exception) {
-                    _openOrganizerScreen.postValue(UserRole.ERROR.apply {
-                        error = ERROR_NOT_INTERNET_STRING
-                    })
-                }
+                val result = SportRepository.signUp(email, nickname, password, inputRole)
+                _openOrganizerScreen.postValue(result)
             }
-        } else {
-            _openOrganizerScreen.postValue(UserRole.ERROR.apply {
-                error = ERROR_INCORRECT_STRING
-            })
         }
     }
 

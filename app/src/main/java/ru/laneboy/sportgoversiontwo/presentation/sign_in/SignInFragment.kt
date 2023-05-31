@@ -9,11 +9,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.FragmentSignInBinding
-import ru.laneboy.sportgoversiontwo.presentation.fragments.AddRequestFragment
-import ru.laneboy.sportgoversiontwo.presentation.organizer.MatchesListForOrganizerFragment
-import ru.laneboy.sportgoversiontwo.presentation.participant.MatchesListForParticipantFragment
+import ru.laneboy.sportgoversiontwo.presentation.participant.MatchListFragment
 import ru.laneboy.sportgoversiontwo.presentation.sign_up.SignUpFragment
-import ru.laneboy.sportgoversiontwo.presentation.sign_up.UserRole
 import ru.laneboy.sportgoversiontwo.util.initProgressBar
 
 class SignInFragment : Fragment() {
@@ -46,30 +43,26 @@ class SignInFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.openOrganizerScreen.observe(viewLifecycleOwner) {
-            when (it!!) {
-                UserRole.LOADING -> {
-                    dialog.show()
-                }
-                UserRole.ORGANIZER -> {
-                    dialog.dismiss()
-                    launchNextScreen(MatchesListForOrganizerFragment.newInstance())
-                }
-                UserRole.PARTICIPANT -> {
-                    dialog.dismiss()
-                    launchNextScreen(MatchesListForParticipantFragment.newInstance())
-                }
-                UserRole.ERROR -> {
-                    dialog.dismiss()
-                    Toast.makeText(context, "Error: ${it.error}", Toast.LENGTH_SHORT).show()
-                }
+        viewModel.auth.observe(viewLifecycleOwner) { auth ->
+            auth.ifLoading {
+                dialog.show()
+            }.ifError {
+                dialog.dismiss()
+                Toast.makeText(context, "${it.message}", Toast.LENGTH_SHORT).show()
+            }.ifSuccess {
+                dialog.dismiss()
+                launchNextScreen(MatchListFragment.newInstance())
+
             }
         }
     }
 
     private fun setClickOnSignInButton() {
         binding.btnSignIn.setOnClickListener {
-            viewModel.signIn(binding.etEmail.text?.toString(), binding.etPassword.text?.toString())
+            viewModel.signIn(
+                binding.etEmail.text?.toString(),
+                binding.etPassword.text?.toString()
+            )
         }
     }
 

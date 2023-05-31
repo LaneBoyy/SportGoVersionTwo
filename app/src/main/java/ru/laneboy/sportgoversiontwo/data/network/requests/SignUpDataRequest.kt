@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class SignUpDataRequest(
     @SerializedName("email")
-    val email: String?,
+    val email: String,
     @SerializedName("name")
-    val name: String?,
+    val name: String,
     @SerializedName("password")
-    val password: String?,
+    val password: String,
     @SerializedName("userRole")
-    val userRole: Int?
+    val userRole: Int
 )

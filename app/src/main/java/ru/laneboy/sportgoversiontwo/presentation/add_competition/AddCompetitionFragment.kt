@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import ru.laneboy.sportgoversiontwo.databinding.FragmentAddCompetitionBinding
 import ru.laneboy.sportgoversiontwo.util.initProgressBar
+import ru.laneboy.sportgoversiontwo.util.showToast
 
 class AddCompetitionFragment : Fragment() {
 
@@ -33,22 +34,18 @@ class AddCompetitionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.competition.observe(viewLifecycleOwner) {
-            when (it) {
-                CompetitionState.LOADING -> {
-                    dialog.show()
-                }
-                CompetitionState.SUCCESS -> {
-                    dialog.dismiss()
-                    Toast.makeText(requireActivity(), "Успешно", Toast.LENGTH_SHORT).show()
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
-                CompetitionState.ERROR -> {
-                    dialog.dismiss()
-                    Toast.makeText(requireActivity(), "Error: ${it.error}", Toast.LENGTH_SHORT)
-                        .show()
-                }
+        viewModel.competition.observe(viewLifecycleOwner) { competition ->
+            competition.ifLoading {
+                dialog.show()
+            }.ifError {
+                dialog.dismiss()
+                showToast(it.message)
+            }.ifSuccess {
+                dialog.dismiss()
+                showToast("Успешно")
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
+
         }
         binding.btnPublish.setOnClickListener {
             viewModel.addCompetition(

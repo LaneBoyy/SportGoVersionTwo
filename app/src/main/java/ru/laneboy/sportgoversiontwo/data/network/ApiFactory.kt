@@ -1,6 +1,7 @@
 package ru.laneboy.sportgoversiontwo.data.network
 
 import com.google.gson.GsonBuilder
+import ru.laneboy.sportgoversiontwo.data.network.wrapper.NetworkResponseAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -28,6 +29,7 @@ object ApiFactory {
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(NetworkResponseAdapterFactory())
         .client(okHttpClient)
         .build()
 

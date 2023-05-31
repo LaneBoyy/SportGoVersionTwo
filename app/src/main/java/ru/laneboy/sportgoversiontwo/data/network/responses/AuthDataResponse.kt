@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class AuthDataResponse(
     @SerializedName("userId")
-    val userId: Int?,
+    val userId: Int,
     @SerializedName("userName")
     val userName: String?,
     @SerializedName("userEmail")
-    val userEmail: String?,
+    val userEmail: String,
     @SerializedName("userPassword")
-    val userPassword: String?,
+    val userPassword: String,
     @SerializedName("userRole")
-    val userRole: String?
+    val userRole: String
 )

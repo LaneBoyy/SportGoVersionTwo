@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">SportGoVersionTwo</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_sport_matches">Доступные спортивные матчи</string>
     <string name="text_matches">Матчи</string>
     <string name="text_create_new_match">Создание нового матча</string>
@@ -11,4 +9,16 @@
     <string name="text_open_requests">Посмотреть поданные заявки</string>
     <string name="competition_list">На данный матчи отсустствуют</string>
     <string name="competition_date">Дата проведения: %s</string>
+
+    <string name="captain">Капитан команды: %s</string>
+
+    <string name="accept">Подтвердить</string>
+    <string name="reject">Отклонить</string>
+    <string name="status_accept">Заявка принята</string>
+    <string name="status_reject">Заявка оклонена</string>
+    <string name="status_in_progress">В рассмотрении</string>
+    <string name="status_unknown">Неизвестно</string>
+    <string name="put_request">Подать заявку</string>
+    <string name="watch_request">Посмотреть заявку</string>
+    <string name="list_requests_empty">Список заявок пока пуст</string>
 </resources>

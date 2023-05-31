@@ -6,9 +6,7 @@ import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.ActivityMainBinding
-import ru.laneboy.sportgoversiontwo.presentation.fragments.SplashScreenFragment
-import ru.laneboy.sportgoversiontwo.presentation.organizer.MatchesListForOrganizerFragment
-import ru.laneboy.sportgoversiontwo.presentation.participant.MatchesListForParticipantFragment
+import ru.laneboy.sportgoversiontwo.presentation.splash_screen.SplashScreenFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         removeStatusBar()
-//        setFragment(SplashScreenFragment.newInstance())
-        setFragment(MatchesListForParticipantFragment.newInstance())
+        setFragment(SplashScreenFragment.newInstance())
+//        setFragment(MatchesListForParticipantFragment.newInstance())
     }
 
     private fun setFragment(fragment: Fragment) {

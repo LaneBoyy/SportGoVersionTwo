@@ -7,45 +7,26 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.laneboy.sportgoversiontwo.data.network.ApiFactory.apiService
-import ru.laneboy.sportgoversiontwo.data.network.requests.SignInDataRequest
-import ru.laneboy.sportgoversiontwo.presentation.sign_up.UserRole
+import ru.laneboy.sportgoversiontwo.data.SportRepository
+import ru.laneboy.sportgoversiontwo.domain.AuthData
+import ru.laneboy.sportgoversiontwo.domain.Resource
 
 class SignInViewModel : ViewModel() {
 
-    private val _openOrganizerScreen = MutableLiveData<UserRole>()
-    val openOrganizerScreen: LiveData<UserRole>
-        get() = _openOrganizerScreen
+    private val _auth = MutableLiveData<Resource<AuthData>>()
+    val auth: LiveData<Resource<AuthData>>
+        get() = _auth
 
     fun signIn(inputEmail: String?, inputPassword: String?) {
         val email = inputEmail?.trim() ?: ""
         val password = inputPassword?.trim() ?: ""
         if (email.isEmailValid() && password.isPasswordValid()) {
+            _auth.value = Resource.loading()
             viewModelScope.launch(Dispatchers.IO) {
-                _openOrganizerScreen.postValue(UserRole.LOADING)
-                val signInItem = SignInDataRequest(email, password)
-                try {
-                    val result = apiService.singIn(signInItem)
-                    if (result.isSuccessful) {
-                        when (result.body()?.userRole) {
-                            PARTICIPANT_ROLE_CODE -> _openOrganizerScreen.postValue(UserRole.PARTICIPANT)
-                            ORGANIZER_ROLE_CODE -> _openOrganizerScreen.postValue(UserRole.ORGANIZER)
-                        }
-                    } else {
-                        _openOrganizerScreen.postValue(UserRole.ERROR.apply {
-                            error = ERROR_STRING
-                        })
-                    }
-                } catch (e: Exception) {
-                    _openOrganizerScreen.postValue(UserRole.ERROR.apply {
-                        error = ERROR_NOT_INTERNET_STRING
-                    })
-                }
+                _auth.postValue(SportRepository.signIn(email, password))
             }
         } else {
-            _openOrganizerScreen.postValue(UserRole.ERROR.apply {
-                error = ERROR_INCORRECT_STRING
-            })
+            _auth.value = Resource.error(Throwable("Заполните все поля"))
         }
     }
 

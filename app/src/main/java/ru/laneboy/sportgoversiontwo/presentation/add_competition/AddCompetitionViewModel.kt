@@ -6,13 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ru.laneboy.sportgoversiontwo.data.SportRepository
 import ru.laneboy.sportgoversiontwo.data.network.ApiFactory
 import ru.laneboy.sportgoversiontwo.data.network.requests.AddCompetitionDataRequest
+import ru.laneboy.sportgoversiontwo.domain.Resource
 
 class AddCompetitionViewModel : ViewModel() {
 
-    private val _competition = MutableLiveData<CompetitionState>()
-    val competition: LiveData<CompetitionState>
+    private val _competition = MutableLiveData<Resource<Any>>()
+    val competition: LiveData<Resource<Any>>
         get() = _competition
 
     fun addCompetition(
@@ -26,32 +28,19 @@ class AddCompetitionViewModel : ViewModel() {
         val sportType = inputSportType?.trim() ?: ""
         val date = inputDate?.trim() ?: ""
         if (matchName.isEmpty() || description.isEmpty() || sportType.isEmpty() || date.isEmpty()) {
-            _competition.value = CompetitionState.ERROR.apply { error = "Заполните все поля" }
+            _competition.value = Resource.error(Throwable("Заполните все поля"))
         } else {
-            _competition.value = CompetitionState.LOADING
+            _competition.value = Resource.loading()
             viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    val result = ApiFactory.apiService.addCompetition(
-                        AddCompetitionDataRequest(
-                            date,
-                            description,
-                            matchName,
-                            sportType
-
-                        )
+                _competition.postValue(
+                    SportRepository.addCompetition(
+                        date,
+                        description,
+                        matchName,
+                        sportType
                     )
-                    if (result.isSuccessful) {
-                        _competition.postValue(CompetitionState.SUCCESS)
-                    } else {
-                        _competition.postValue(CompetitionState.ERROR.apply {
-                            error = result.errorBody().toString()
-                        })
-                    }
-                } catch (e: Exception) {
-                    _competition.postValue(CompetitionState.ERROR.apply {
-                        error = e.message
-                    })
-                }
+                )
+
             }
         }
     }
