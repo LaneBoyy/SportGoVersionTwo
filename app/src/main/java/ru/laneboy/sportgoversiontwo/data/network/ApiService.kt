@@ -9,6 +9,7 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 import ru.laneboy.sportgoversiontwo.data.network.requests.AddCompetitionDataRequest
+import ru.laneboy.sportgoversiontwo.data.network.requests.AddRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.ChangeStatusRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.SignInDataRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.SignUpDataRequest
@@ -34,12 +35,12 @@ interface ApiService {
 
     @GET("api/user/{user_id}/requests")
     suspend fun getRequestList(
-        @Path("user_id") userId:Int
+        @Path("user_id") userId: Int
     ): ApiResponse<List<RequestItemResponse>>
 
     @GET("api/competition/{competition_id}/requests")
     suspend fun getCompetitionRequests(
-        @Path("competition_id") competitionId:Int
+        @Path("competition_id") competitionId: Int
     ): ApiResponse<List<RequestItemResponse>>
 
     @PATCH("api/request")
@@ -47,6 +48,8 @@ interface ApiService {
         @Body changeStatusRequest: ChangeStatusRequest
     ): ApiResponse<Any>
 
-
-
+    @POST("api/request")
+    suspend fun addRequest(
+        @Body request: AddRequest
+    ): ApiResponse<RequestItemResponse>
 }

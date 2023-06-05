@@ -65,4 +65,7 @@ dependencies {
 
     //Swipe refresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    //Zoom layout
+    implementation 'com.otaliastudios:zoomlayout:1.9.0'
 }

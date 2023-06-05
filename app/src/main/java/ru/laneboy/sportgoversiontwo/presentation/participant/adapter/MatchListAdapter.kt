@@ -13,6 +13,7 @@ class MatchListAdapter(private val isUser: Boolean) : RecyclerView.Adapter<Match
 
     private var competitionList = listOf<CompetitionItemResponse>()
 
+    var onItemClick: ((competitionId: Int) -> Unit)? = null
     var onButtonClick: ((competitionId: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(
@@ -42,7 +43,10 @@ class MatchListAdapter(private val isUser: Boolean) : RecyclerView.Adapter<Match
             if (isUser) {
                 btnRequest.text = getString(R.string.put_request)
             } else {
-                btnRequest.text = getString(R.string.watch_request)
+                btnRequest.text = getString(R.string.watch_requests)
+            }
+            root.setOnClickListener {
+                onItemClick?.invoke(item.competitionId)
             }
             btnRequest.setOnClickListener {
                 onButtonClick?.invoke(item.competitionId)

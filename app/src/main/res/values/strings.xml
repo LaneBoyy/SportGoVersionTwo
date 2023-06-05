@@ -19,6 +19,7 @@
     <string name="status_in_progress">В рассмотрении</string>
     <string name="status_unknown">Неизвестно</string>
     <string name="put_request">Подать заявку</string>
-    <string name="watch_request">Посмотреть заявку</string>
+    <string name="watch_requests">Посмотреть заявки</string>
     <string name="list_requests_empty">Список заявок пока пуст</string>
+    <string name="start_match">Начать матч</string>
 </resources>

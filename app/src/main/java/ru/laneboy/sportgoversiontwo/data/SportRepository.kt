@@ -4,6 +4,7 @@ import ru.laneboy.sportgoversiontwo.data.network.wrapper.ApiErrorResponse
 import ru.laneboy.sportgoversiontwo.data.network.wrapper.ApiSuccessResponse
 import ru.laneboy.sportgoversiontwo.data.network.ApiFactory
 import ru.laneboy.sportgoversiontwo.data.network.requests.AddCompetitionDataRequest
+import ru.laneboy.sportgoversiontwo.data.network.requests.AddRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.ChangeStatusRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.SignInDataRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.SignUpDataRequest
@@ -97,6 +98,18 @@ object SportRepository {
         return when (val t =
             apiService.changeRequestStatus(ChangeStatusRequest(requestId, status))) {
             is ApiSuccessResponse -> Resource.success(t.data)
+            is ApiErrorResponse -> Resource.error(t.error)
+        }
+    }
+
+    suspend fun addRequest(
+        competitionId: Int,
+        teamName: String,
+        teamCaptain: String
+    ): Resource<RequestItem> {
+        val request = AddRequest(userId, competitionId, teamName, teamCaptain)
+        return when (val t = apiService.addRequest(request)) {
+            is ApiSuccessResponse -> Resource.success(t.data.toRequestItem())
             is ApiErrorResponse -> Resource.error(t.error)
         }
     }
