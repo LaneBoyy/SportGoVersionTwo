@@ -19,9 +19,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         removeStatusBar()
-//        setFragment(SplashScreenFragment.newInstance())
+        setFragment(SplashScreenFragment.newInstance())
 //        setFragment(MatchesListForParticipantFragment.newInstance())
-        setFragment(GameDiagramFragment.newInstance())
+//        setFragment(GameDiagramFragment.newInstance())
     }
 
     private fun setFragment(fragment: Fragment) {
