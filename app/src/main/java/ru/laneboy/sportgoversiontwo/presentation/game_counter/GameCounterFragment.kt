@@ -29,6 +29,11 @@ class GameCounterFragment : Fragment() {
         arguments?.getSerializable(GAME_DIAGRAM) as GameDiagram
     }
 
+
+    private val isAdmin by lazy {
+        arguments?.getBoolean(IS_ADMIN)!!
+    }
+
     private val viewModel by lazy {
         ViewModelProvider(this, GameViewModelFactory(gameDiagram))[GameCounterViewModel::class.java]
     }
@@ -82,27 +87,35 @@ class GameCounterFragment : Fragment() {
         binding.tvTeamName2.text = gameDiagram.gameData.secondTeam
         binding.tvCounterTeam1.text = gameDiagram.gameData.firstTeamScore.toString()
         binding.tvCounterTeam2.text = gameDiagram.gameData.secondTeamScore.toString()
-        if (!gameDiagram.gameData.gameIsEnd) {
-            binding.btnEndGame.visible()
-            binding.btnTeamPlus1.setOnClickListener {
-                viewModel.changeScore(true, true)
-            }
-            binding.btnTeamPlus2.setOnClickListener {
-                viewModel.changeScore(false, true)
+        if (isAdmin) {
+            if (!gameDiagram.gameData.gameIsEnd) {
+                binding.btnEndGame.visible()
+                binding.btnTeamPlus1.setOnClickListener {
+                    viewModel.changeScore(true, true)
+                }
+                binding.btnTeamPlus2.setOnClickListener {
+                    viewModel.changeScore(false, true)
 
-            }
-            binding.btnTeamMinus1.setOnClickListener {
-                viewModel.changeScore(true, false)
+                }
+                binding.btnTeamMinus1.setOnClickListener {
+                    viewModel.changeScore(true, false)
 
+                }
+                binding.btnTeamMinus2.setOnClickListener {
+                    viewModel.changeScore(false, false)
+                }
+                binding.btnEndGame.setOnClickListener {
+                    viewModel.endGame()
+                }
+            } else {
+                binding.btnEndGame.gone()
             }
-            binding.btnTeamMinus2.setOnClickListener {
-                viewModel.changeScore(false, false)
-            }
-            binding.btnEndGame.setOnClickListener {
-                viewModel.endGame()
-            }
-        } else {
+        }else{
             binding.btnEndGame.gone()
+            binding.btnTeamPlus1.gone()
+            binding.btnTeamPlus2.gone()
+            binding.btnTeamMinus1.gone()
+            binding.btnTeamMinus2.gone()
         }
     }
 
@@ -114,9 +127,10 @@ class GameCounterFragment : Fragment() {
     companion object {
 
         private const val GAME_DIAGRAM = "GAME_DIAGRAM"
+        private const val IS_ADMIN = "IS_ADMIN"
 
-        fun newInstance(gameDiagram: GameDiagram) = GameCounterFragment().apply {
-            arguments = bundleOf(GAME_DIAGRAM to gameDiagram)
+        fun newInstance(gameDiagram: GameDiagram, isAdmin: Boolean) = GameCounterFragment().apply {
+            arguments = bundleOf(GAME_DIAGRAM to gameDiagram, IS_ADMIN to isAdmin)
         }
     }
 }
