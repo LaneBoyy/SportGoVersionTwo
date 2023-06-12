@@ -42,6 +42,19 @@ data class Resource<T>(
     }
 
     /**
+     * Метод для выполнения части [block] ассинхронно если текущее состояние равно [SUCCESS].
+     *
+     * @param block - блок для выполнения.
+     * @return текущий ресурс.
+     */
+    suspend fun ifSuccessAsync(block: suspend (data: T?) -> Unit): Resource<T> {
+        if (status.isSuccess()) {
+            block(data)
+        }
+        return this
+    }
+
+    /**
      * Метод для выполнения части [block] если текущее состояние равно [LOADING].
      *
      * @param block - блок для выполнения.

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.gamesdiagram.GameDiagramFragment">
+    tools:context=".presentation.game_diagram.GameDiagramFragment">
 
 
     <FrameLayout
@@ -24,20 +24,36 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:visibility="gone"
-            android:background="@drawable/bg_start_match_active"/>
+            android:background="@drawable/bg_start_match_active"
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
             android:fontFamily="@font/stem_medium"
             android:gravity="center"
-            android:layout_marginHorizontal="10dp"
             android:text="@string/start_match"
             android:textColor="@color/white"
             android:textSize="20sp" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/gameNotStarted"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:fontFamily="@font/stem_medium"
+        android:gravity="center"
+        android:text="@string/game_not_start"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.otaliastudios.zoom.ZoomLayout
         android:id="@+id/zoom"
@@ -71,7 +87,7 @@
         app:zoomEnabled="true">
 
 
-        <ru.laneboy.sportgoversiontwo.presentation.gamesdiagram.view.GameDiagramView
+        <ru.laneboy.sportgoversiontwo.presentation.game_diagram.view.GameDiagramView
             android:id="@+id/diagramView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

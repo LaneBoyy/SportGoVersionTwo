@@ -10,7 +10,7 @@ import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.FragmentMatchesListBinding
 import ru.laneboy.sportgoversiontwo.presentation.add_competition.AddCompetitionFragment
 import ru.laneboy.sportgoversiontwo.presentation.add_request.AddRequestFragment
-import ru.laneboy.sportgoversiontwo.presentation.gamesdiagram.GameDiagramFragment
+import ru.laneboy.sportgoversiontwo.presentation.game_diagram.GameDiagramFragment
 import ru.laneboy.sportgoversiontwo.presentation.participant.adapter.MatchListAdapter
 import ru.laneboy.sportgoversiontwo.presentation.participant.adapter.MatchListViewModel
 import ru.laneboy.sportgoversiontwo.presentation.request_list.RequestListFragment
@@ -80,6 +80,20 @@ class MatchListFragment : Fragment() {
         binding.root.setOnRefreshListener {
             viewModel.loadCompetitionList()
         }
+        adapter.onItemClick = { competitionId ->
+            parentFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.slide_enter_left,
+                    R.anim.slide_exit_left,
+                    R.anim.slide_enter_right,
+                    R.anim.slide_exit_right
+                )
+                .addToBackStack(null)
+                .replace(
+                    R.id.fragment_container_main,
+                    GameDiagramFragment.newInstance(!viewModel.isUser,competitionId)
+                ).commit()
+        }
         if (viewModel.isUser) {
             //User
             binding.btnOpenAllRequests.visible()
@@ -129,20 +143,6 @@ class MatchListFragment : Fragment() {
                     .replace(
                         R.id.fragment_container_main,
                         AddCompetitionFragment.newInstance()
-                    ).commit()
-            }
-            adapter.onItemClick = { competitionId ->
-                parentFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.slide_enter_left,
-                        R.anim.slide_exit_left,
-                        R.anim.slide_enter_right,
-                        R.anim.slide_exit_right
-                    )
-                    .addToBackStack(null)
-                    .replace(
-                        R.id.fragment_container_main,
-                        GameDiagramFragment.newInstance()
                     ).commit()
             }
             adapter.onButtonClick = { competitionId ->

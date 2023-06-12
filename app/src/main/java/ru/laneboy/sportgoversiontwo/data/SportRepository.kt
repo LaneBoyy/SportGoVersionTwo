@@ -9,6 +9,7 @@ import ru.laneboy.sportgoversiontwo.data.network.requests.ChangeStatusRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.SignInDataRequest
 import ru.laneboy.sportgoversiontwo.data.network.requests.SignUpDataRequest
 import ru.laneboy.sportgoversiontwo.data.network.responses.CompetitionItemResponse
+import ru.laneboy.sportgoversiontwo.data.network.responses.GameDiagramRequest
 import ru.laneboy.sportgoversiontwo.data.network.responses.UserRole
 import ru.laneboy.sportgoversiontwo.domain.AuthData
 import ru.laneboy.sportgoversiontwo.domain.RequestItem
@@ -87,8 +88,8 @@ object SportRepository {
         }
     }
 
-    suspend fun getCompetitionRequests(id: Int): Resource<List<RequestItem>> {
-        return when (val t = apiService.getCompetitionRequests(id)) {
+    suspend fun getRequestsByCompetitionId(id: Int): Resource<List<RequestItem>> {
+        return when (val t = apiService.getRequestsByCompetitionId(id)) {
             is ApiSuccessResponse -> Resource.success(t.data.map { it.toRequestItem() })
             is ApiErrorResponse -> Resource.error(t.error)
         }
@@ -110,6 +111,35 @@ object SportRepository {
         val request = AddRequest(userId, competitionId, teamName, teamCaptain)
         return when (val t = apiService.addRequest(request)) {
             is ApiSuccessResponse -> Resource.success(t.data.toRequestItem())
+            is ApiErrorResponse -> Resource.error(t.error)
+        }
+    }
+
+    suspend fun getGameList(competitionId: Int): Resource<List<GameDiagramRequest>> {
+        return when (val t = apiService.getGameList(competitionId)) {
+            is ApiSuccessResponse -> Resource.success(t.data)
+            is ApiErrorResponse -> Resource.error(t.error)
+        }
+
+    }
+
+    suspend fun createGame(gameList: List<GameDiagramRequest>): Resource<Unit> {
+        return when (val t = apiService.createGame(gameList)) {
+            is ApiSuccessResponse -> Resource.success(t.data)
+            is ApiErrorResponse -> Resource.error(t.error)
+        }
+    }
+
+    suspend fun updateGame(game: GameDiagramRequest): Resource<Unit> {
+        return when (val t = apiService.updateGame(game)) {
+            is ApiSuccessResponse -> Resource.success(t.data)
+            is ApiErrorResponse -> Resource.error(t.error)
+        }
+    }
+
+    suspend fun loadGame(competitionId: Int, gameId:Int): Resource<GameDiagramRequest> {
+        return when (val t = apiService.getGame(competitionId,gameId)) {
+            is ApiSuccessResponse -> Resource.success(t.data)
             is ApiErrorResponse -> Resource.error(t.error)
         }
     }

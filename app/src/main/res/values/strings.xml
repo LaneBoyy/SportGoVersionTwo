@@ -22,4 +22,6 @@
     <string name="watch_requests">Посмотреть заявки</string>
     <string name="list_requests_empty">Список заявок пока пуст</string>
     <string name="start_match">Начать матч</string>
+    <string name="end_game">Завершить игру</string>
+    <string name="game_not_start">Игра еще не началась</string>
 </resources>

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiFactory {
 
-    private const val BASE_URL = "http://192.168.144.66:8080/"
+    private const val BASE_URL = "http://192.168.144.66:80/"
 
     private val httpLoggingInterceptor = HttpLoggingInterceptor()
         .setLevel(HttpLoggingInterceptor.Level.BODY)

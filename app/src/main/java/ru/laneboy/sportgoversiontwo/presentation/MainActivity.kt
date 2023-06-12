@@ -2,12 +2,14 @@ package ru.laneboy.sportgoversiontwo.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 import ru.laneboy.sportgoversiontwo.R
 import ru.laneboy.sportgoversiontwo.databinding.ActivityMainBinding
-import ru.laneboy.sportgoversiontwo.presentation.gamesdiagram.GameDiagramFragment
+import ru.laneboy.sportgoversiontwo.presentation.game_diagram.GameDiagramFragment
 import ru.laneboy.sportgoversiontwo.presentation.splash_screen.SplashScreenFragment
+import kotlin.math.log2
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         removeStatusBar()
+        Log.d("MainLog", "Round ${log2(0F)}")
         setFragment(SplashScreenFragment.newInstance())
 //        setFragment(MatchesListForParticipantFragment.newInstance())
 //        setFragment(GameDiagramFragment.newInstance())

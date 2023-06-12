@@ -1,4 +1,4 @@
-package ru.laneboy.sportgoversiontwo.presentation.gamesdiagram.view
+package ru.laneboy.sportgoversiontwo.presentation.game_diagram.view
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,7 +7,6 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.text.TextUtils
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -15,12 +14,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import ru.laneboy.sportgoversiontwo.R
+import ru.laneboy.sportgoversiontwo.domain.GameDiagram
 import ru.laneboy.sportgoversiontwo.util.dpToPx
 import kotlin.math.pow
 
 class GameDiagramView : ViewGroup {
 
     private var gameDiagram: GameDiagram? = null
+
+    var onGameClick: ((GameDiagram) -> Unit)? = null
+
     private var nodeDeep = 0
         set(value) {
             bottomNodeCount = 2.0.pow(value).toInt()
@@ -44,7 +47,6 @@ class GameDiagramView : ViewGroup {
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
         isDither = true
-
     }
 
     constructor(context: Context) : super(context) {
@@ -72,16 +74,16 @@ class GameDiagramView : ViewGroup {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = (frameDistanceX * nodeDeep) + (frameWidth * (nodeDeep + 1))
         val height = (frameDistanceY * (bottomNodeCount - 1)) + (frameHeight * bottomNodeCount)
-        Log.d(
-            "MainLog", "Measure width: ${width}\n" +
-                    "Measure height: ${height}\n" +
-                    "Diagram deep: ${nodeDeep}\n" +
-                    "Diagram bottomNodeCount: ${bottomNodeCount}\n" +
-                    "Frame width: ${frameWidth}\n" +
-                    "Distance X: ${frameDistanceX}\n" +
-                    "Frame height: ${frameHeight}\n" +
-                    "Distance Y: ${frameDistanceY}"
-        )
+//        Log.d(
+//            "MainLog", "Measure width: ${width}\n" +
+//                    "Measure height: ${height}\n" +
+//                    "Diagram deep: ${nodeDeep}\n" +
+//                    "Diagram bottomNodeCount: ${bottomNodeCount}\n" +
+//                    "Frame width: ${frameWidth}\n" +
+//                    "Distance X: ${frameDistanceX}\n" +
+//                    "Frame height: ${frameHeight}\n" +
+//                    "Distance Y: ${frameDistanceY}"
+//        )
         diagramViews?.let {
             diagramMeasure(it, width, height)
         }
@@ -243,42 +245,6 @@ class GameDiagramView : ViewGroup {
         }
     }
 
-//    private fun diagramDraw(canvas: Canvas, diagramViews: DiagramViews, x: Float, y: Float) {
-//        if (diagramViews != null) {
-//            val pathTop = Path().apply {
-//                moveTo(x, y)
-//                lineTo(x - frameDistanceX / 2, y)
-//                lineTo(x - frameDistanceX / 2, y - frameDistanceY / 2 - frameHeight / 2)
-//                lineTo(x - frameDistanceX, y - frameDistanceY / 2 - frameHeight / 2)
-//            }
-//            val pathBottom = Path().apply {
-//                moveTo(x, y)
-//                lineTo(x - frameDistanceX / 2, y)
-//                lineTo(x - frameDistanceX / 2, y + frameDistanceY / 2 + frameHeight / 2)
-//                lineTo(x - frameDistanceX, y + frameDistanceY / 2 + frameHeight / 2)
-//            }
-//            canvas.drawPath(pathTop, linePaint)
-//            canvas.drawPath(pathBottom, linePaint)
-//        }
-//        if (diagramViews.previousTopLinearLayout != null) {
-//            diagramDraw(
-//                canvas,
-//                diagramViews.previousTopLinearLayout!!,
-//                x - frameDistanceX - frameWidth,
-//                y - frameDistanceY / 2 - frameHeight / 2
-//            )
-//        }
-//        if (diagramViews.previousBottomLinearLayout != null) {
-//
-//            diagramDraw(
-//                canvas,
-//                diagramViews.previousBottomLinearLayout!!,
-//                x - frameDistanceX - frameWidth,
-//                y + frameDistanceY / 2 + frameHeight / 2
-//            )
-//        }
-//    }
-
     fun setGameDiagram(gameDiagram: GameDiagram) {
         this.gameDiagram = gameDiagram
         nodeDeep = 0
@@ -302,28 +268,27 @@ class GameDiagramView : ViewGroup {
     private var isRightNode = false
 
     private fun createDiagramViews(gameDiagram: GameDiagram, diagramView: DiagramViews) {
-        if (gameDiagram.firstTeam != null && gameDiagram.secondTeam != null) {
+        if (gameDiagram.gameData?.firstTeam != null && gameDiagram.gameData?.secondTeam != null) {
 
-            diagramView.linearLayout =
-                createGameView(gameDiagram.firstTeam!!, gameDiagram.secondTeam!!)
+            diagramView.linearLayout = createGameView(gameDiagram)
         }
-        if (gameDiagram.previousTopMatch != null) {
+        if (gameDiagram.previousTopGame != null) {
             if (isRightNode)
                 nodeDeep += 1
             val previousTopDiagramViews = DiagramViews()
             diagramView.previousTopLinearLayout = previousTopDiagramViews
-            createDiagramViews(gameDiagram.previousTopMatch!!, previousTopDiagramViews)
+            createDiagramViews(gameDiagram.previousTopGame!!, previousTopDiagramViews)
             isRightNode = false
         }
-        if (gameDiagram.previousBottomMatch != null) {
+        if (gameDiagram.previousBottomGame != null) {
             val previousBottomDiagramViews = DiagramViews()
             diagramView.previousBottomLinearLayout = previousBottomDiagramViews
-            createDiagramViews(gameDiagram.previousBottomMatch!!, previousBottomDiagramViews)
+            createDiagramViews(gameDiagram.previousBottomGame!!, previousBottomDiagramViews)
 
         }
     }
 
-    private fun createGameView(firstTeam: String, secondTeam: String): FrameLayout {
+    private fun createGameView(gameDiagram: GameDiagram): FrameLayout {
         val frameLayout = FrameLayout(context).apply {
             layoutParams = ViewGroup.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -339,10 +304,10 @@ class GameDiagramView : ViewGroup {
             )
             orientation = LinearLayout.VERTICAL
             setOnClickListener {
-                Toast.makeText(context, "$firstTeam X $secondTeam", Toast.LENGTH_SHORT).show()
+                onGameClick?.invoke(gameDiagram)
             }
             val firstTeamTextView = TextView(context).apply {
-                text = firstTeam
+                text = gameDiagram.gameData!!.firstTeam
                 maxLines = 1
                 ellipsize = TextUtils.TruncateAt.END
                 layoutParams = LinearLayout.LayoutParams(
@@ -367,7 +332,7 @@ class GameDiagramView : ViewGroup {
             }
             this.addView(x)
             val secondTeamTextView = TextView(context).apply {
-                text = secondTeam
+                text = gameDiagram.gameData!!.secondTeam
                 maxLines = 1
                 ellipsize = TextUtils.TruncateAt.END
                 layoutParams = LinearLayout.LayoutParams(
