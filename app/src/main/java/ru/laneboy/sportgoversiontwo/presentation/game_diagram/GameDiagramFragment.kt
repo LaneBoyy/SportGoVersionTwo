@@ -128,20 +128,21 @@ class GameDiagramFragment : Fragment() {
             viewModel.generateGames()
         }
         binding.diagramView.onGameClick = {
-            parentFragmentManager.beginTransaction()
-                .setCustomAnimations(
-                    R.anim.slide_enter_left,
-                    R.anim.slide_exit_left,
-                    R.anim.slide_enter_right,
-                    R.anim.slide_exit_right
-                )
-                .addToBackStack(null)
-                .replace(
-                    R.id.fragment_container_main,
-                    GameCounterFragment.newInstance(it)
-                )
-                .commit()
-
+            if (isAdmin) {
+                parentFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.slide_enter_left,
+                        R.anim.slide_exit_left,
+                        R.anim.slide_enter_right,
+                        R.anim.slide_exit_right
+                    )
+                    .addToBackStack(null)
+                    .replace(
+                        R.id.fragment_container_main,
+                        GameCounterFragment.newInstance(it)
+                    )
+                    .commit()
+            }
         }
     }
 
