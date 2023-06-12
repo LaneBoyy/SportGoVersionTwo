@@ -188,9 +188,9 @@ class GameDiagramViewModel : ViewModel() {
             val topGameData = topGameDiagram.gameData!!
             val bottomGameData = bottomGameDiagram.gameData!!
             val firstTeam = if (topGameData.firstTeamScore > topGameData.secondTeamScore)
-                topGameData.firstTeam else topGameData.firstTeam
+                topGameData.firstTeam else topGameData.secondTeam
             val secondTeam = if (bottomGameData.firstTeamScore > bottomGameData.secondTeamScore)
-                bottomGameData.firstTeam else bottomGameData.firstTeam
+                bottomGameData.firstTeam else bottomGameData.secondTeam
             gameDiagram.gameData = GameData(firstTeam, secondTeam, 0, 0, false)
             needGameUpdate.add(gameDiagram.toRequest())
         } else {
