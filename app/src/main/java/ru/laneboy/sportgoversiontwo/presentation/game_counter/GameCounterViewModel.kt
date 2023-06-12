@@ -42,11 +42,11 @@ class GameCounterViewModel(private val gameDiagram: GameDiagram) : ViewModel() {
             val newGameData =
                 if (isFirstTeam) {
                     val newScore =
-                        if (isPlus) oldGame.gameData!!.firstTeamScore + 1 else oldGame.gameData!!.firstTeamScore - 1
+                        if (isPlus) oldGame.gameData!!.firstTeamScore + 1 else if (oldGame.gameData!!.firstTeamScore > 0) oldGame.gameData.firstTeamScore - 1 else 0
                     oldGame.gameData.copy(firstTeamScore = newScore)
                 } else {
                     val newScore =
-                        if (isPlus) oldGame.gameData!!.secondTeamScore + 1 else oldGame.gameData!!.secondTeamScore - 1
+                        if (isPlus) oldGame.gameData!!.secondTeamScore + 1 else if (oldGame.gameData!!.secondTeamScore > 0) oldGame.gameData!!.secondTeamScore - 1 else 0
                     oldGame.gameData.copy(secondTeamScore = newScore)
                 }
             val editGame = oldGame.copy(gameData = newGameData)
