@@ -22,7 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         removeStatusBar()
         Log.d("MainLog", "Round ${log2(0F)}")
-        setFragment(SplashScreenFragment.newInstance())
+        if (savedInstanceState == null) {
+            setFragment(SplashScreenFragment.newInstance())
+        }
 //        setFragment(MatchesListForParticipantFragment.newInstance())
 //        setFragment(GameDiagramFragment.newInstance())
     }

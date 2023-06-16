@@ -59,15 +59,11 @@ class SignUpFragment : Fragment() {
 
     private fun setClickOnButtonSignIn() {
         binding.btnSignUp.setOnClickListener {
-            val roleId = if (binding.toggle.checkedRadioButtonId == R.id.participantRole0)
-                0
-            else
-                1
             viewModel.signUp(
                 binding.etEmail.text?.toString(),
                 binding.etNickname.text?.toString(),
                 binding.etPassword.text?.toString(),
-                roleId
+                0
             )
         }
     }
