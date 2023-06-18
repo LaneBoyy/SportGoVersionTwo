@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SportGoVersionTwo</string>
+    <string name="app_name">SportGo</string>
     <string name="text_sport_matches">Доступные спортивные матчи</string>
     <string name="text_matches">Матчи</string>
     <string name="text_create_new_match">Создание нового матча</string>

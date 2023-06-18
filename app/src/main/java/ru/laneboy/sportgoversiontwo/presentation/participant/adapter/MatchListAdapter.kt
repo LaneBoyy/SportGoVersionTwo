@@ -33,12 +33,19 @@ class MatchListAdapter(private val isUser: Boolean) : RecyclerView.Adapter<Match
         val item = competitionList[position]
         val binding = holder.binding
         with(binding) {
-            tvCompetitionName.text = item.competitionName
+//            tvCompetitionName.text = item.competitionName
+//            tvCompetitionDescription.text = item.competitionDescription
+//            tvSportType.text = item.sportType
+//            tvCompetitionDate.text = String.format(
+//                binding.root.context.getString(R.string.competition_date),
+//                item.competitionDate
+//            )
+            tvCompetitionName.text = item.sportType
             tvCompetitionDescription.text = item.competitionDescription
-            tvSportType.text = item.sportType
+            tvSportType.text = item.competitionDate
             tvCompetitionDate.text = String.format(
                 binding.root.context.getString(R.string.competition_date),
-                item.competitionDate
+                item.competitionName
             )
             if (isUser) {
                 btnRequest.text = getString(R.string.put_request)
